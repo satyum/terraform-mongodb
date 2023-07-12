@@ -41,9 +41,7 @@ resource "aws_instance" "primary" {
     Name = "mongodb-primary"
   }
 
-  provisioner "local-exec" {
-    command = "hostnamectl set-hostname mongodb-primary"
-  }
+
 
   user_data = templatefile("${path.module}/userdata.tpl", {
     is_primary       = true
@@ -69,9 +67,6 @@ resource "aws_instance" "secondary" {
     Name = "mongodb-secondary-${count.index}"
   }
 
-  provisioner "local-exec" {
-    command = "hostnamectl set-hostname mongodb-secondary-${count.index}"
-  }
 
   user_data = templatefile("${path.module}/userdata.tpl", {
     is_primary       = false
