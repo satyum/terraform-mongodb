@@ -91,7 +91,7 @@ resource "aws_security_group" "mongodb" {
     from_port   = 27017
     to_port     = 27017
     protocol    = "tcp"
-    cidr_blocks = ["0.0.0.0/0"]
+    cidr_blocks = ["${var.vpc_cidr_block}"]
   }
 }
 
@@ -101,7 +101,7 @@ resource "aws_security_group_rule" "allow_ssh" {
   from_port         = 22
   to_port           = 22
   protocol          = "tcp"
-  cidr_blocks       = ["0.0.0.0/0"]
+  cidr_blocks       = ["${var.vpc_cidr_block}"]
 }
 
 resource "aws_iam_instance_profile" "ssm_instance_profile" {
