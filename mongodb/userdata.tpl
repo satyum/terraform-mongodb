@@ -22,8 +22,7 @@ if [ "${is_primary}" = true ]; then
 replication:
   replSetName: "${replica_set}"
 EOF
-
-  sleep 10
+ sudo systemctl restart mongod
   export primary_ip=$(curl -s http://169.254.169.254/latest/meta-data/local-ipv4)
 
   aws ec2 describe-instances --region us-east-1 --filters "Name=tag:Name,Values=mongodb-secondary*" --query "Reservations[].Instances[].InstanceId" --output text > /tmp/instance_ids.txt &
@@ -44,12 +43,9 @@ EOF
     }
   )"
 
-
   while IFS= read -r ip; do
-    echo "$ip"
     mongosh --eval "rs.add('$ip:27017')"
-  done < /tmp/private_ips.txt
-
+  done < <(awk '{ for (i=1; i<=NF; i++) print $i }' /tmp/private_ips.txt)
   mongosh --eval "rs.status()"
 
 
@@ -60,6 +56,8 @@ else
   replSetName: \"${replica_set}\"
 " | sudo tee -a /etc/mongod.conf
   sudo systemctl start mongod
+  sudo systemctl enable mongod
+  sudo systemctl restart mongod
 fi
 
 
@@ -69,5 +67,3 @@ mongosh --eval "db.getSiblingDB('admin').createUser({user: '${mongo_username}', 
 mongosh --eval "db.getSiblingDB('${mongo_database}').createUser({user: '${mongo_username}', pwd: '${mongo_password}', roles: ['readWrite']})"
 
 
-mongosh --eval "db.getSiblingDB('admin').createUser({user: 'nw_attendance', pwd: 'pass', roles: ['root']})"
-mongosh --eval "db.getSiblingDB('nw_attendance').createUser({user: 'nw_attendance', pwd: 'pass123', roles: ['readWrite']})"

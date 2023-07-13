@@ -3,10 +3,10 @@ variable "region" {
   type        = string
 }
 
-variable "ami" {
+variable "ami_id" {
   description = "Amazon Machine Image (AMI) ID"
   type        = string
-  default = "ami-053b0d53c279acc90"
+  default="ami-053b0d53c279acc90"
 }
 
 variable "instance_type" {
@@ -27,6 +27,10 @@ variable "vpc_id" {
   description = "ID of the subnet for the primary instances"
   type        = string
 }
+variable "vpc_cidr_block" {
+  description = "ID of the subnet for the primary instances"
+  type        = string
+}
 
 variable "private_subnet_id" {
   description = "ID of the subnet for the secondary instances"
@@ -42,6 +46,41 @@ variable "replica_set" {
   description = "Name of the MongoDB replica set"
   type        = string
 }
+variable "ebs_optimized" {
+  description = "If true, the launched EC2 instance will be EBS-optimized"
+  type        = bool
+  default     = true
+}
+
+variable "delete_on_termination" {
+  description = "Whether EBS volume will be deleted when instance gets deleted."
+  type        = bool
+  default     = true
+}
+
+variable "kms_key_id" {
+    type    = string
+    description = "KMS key ID for creating AWS resources"
+}
+
+variable "encrypted" {
+  description = "Whether EBS volume will be encrypted."
+  type        = bool
+  default     = true
+}
+
+variable "root_volume_size" {
+  description = "Root volume size of the EC2 instance"
+  type        = number
+  default     = 50
+}
+
+variable "volume_type" {
+  description = "Volume type for EC2 instance default latest type"
+  type        = string
+  default     = "gp3"
+}
+
 
 variable "primary_bind_ip" {
   description = "IP address to bind the MongoDB primary instance"
