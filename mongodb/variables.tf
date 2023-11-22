@@ -58,10 +58,10 @@ variable "delete_on_termination" {
   default     = true
 }
 
-variable "kms_key_id" {
-    type    = string
-    description = "KMS key ID for creating AWS resources"
-}
+#variable "kms_key_id" {
+ #   type    = string
+  #  description = "KMS key ID for creating AWS resources"
+#}
 
 variable "encrypted" {
   description = "Whether EBS volume will be encrypted."
