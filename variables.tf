@@ -21,7 +21,7 @@ variable "key_name" {
 
 variable "subnet_id" {
   description = "ID of the subnet for the primary instances"
-  type        = string
+  type        = list(string)
 }
 variable "vpc_id" {
   description = "ID of the subnet for the primary instances"
