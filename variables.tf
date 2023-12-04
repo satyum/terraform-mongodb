@@ -19,7 +19,7 @@ variable "key_name" {
   type        = string
 }
 
-variable "subnet_id" {
+variable "subnet_ids" {
   description = "ID of the subnet for the primary instances"
   type        = list(string)
 }

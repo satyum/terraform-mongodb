@@ -32,7 +32,7 @@ resource "aws_instance" "primary" {
   ami           = var.ami_id
   instance_type = var.instance_type
   key_name      = var.key_name
-  subnet_id     = var.private_subnet_id
+  subnet_id     = var.var.subnet_ids[0]
   tags = {
     Name = "mongodb-primary"
   }
@@ -66,7 +66,7 @@ resource "aws_instance" "secondary" {
   ami           = var.ami_id
   instance_type = var.instance_type
   key_name      = var.key_name
-  subnet_id     = var.private_subnet_id  # Use a private subnet ID
+  subnet_id     = var.subnet_ids[0]  # Use a private subnet ID
   associate_public_ip_address = false    # Ensure no public IP is associated
   tags = {
     Name = "mongodb-secondary-${count.index}"
