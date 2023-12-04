@@ -32,10 +32,6 @@ variable "vpc_cidr_block" {
   type        = string
 }
 
-variable "private_subnet_id" {
-  description = "ID of the subnet for the secondary instances"
-  type        = list(string)
-}
 
 variable "secondary_count" {
   description = "Number of secondary instances to launch"
