@@ -32,7 +32,7 @@ resource "aws_instance" "primary" {
   ami           = var.ami_id
   instance_type = var.instance_type
   key_name      = var.key_name
-  subnet_id     = var.var.subnet_ids[0]
+  subnet_id     = var.subnet_ids[0]
   tags = {
     Name = "mongodb-primary"
   }
